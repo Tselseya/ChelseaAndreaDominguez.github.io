@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alphabetical Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    function sortAlphabeticalOrder() {
+      var string = prompt("Enter a string");
+
+      if (string) {
+        const stringArray = string.split('');
+        stringArray.sort();
+        var sortedString = stringArray.join('');
+
+        console.log(sortedString);
+        alert("The string in alphabetical order: " + sortedString);
+      } else {
+        alert("Please enter a string.");
+      }
+    }
+  </script>
+  <h1>Alphabetical Order</h1>
+  <button onclick="sortAlphabeticalOrder()">Sort in Alphabetical Order</button>
+  <p><button onclick="history.back()">Go Back</button></p>
+</body>
+</html>

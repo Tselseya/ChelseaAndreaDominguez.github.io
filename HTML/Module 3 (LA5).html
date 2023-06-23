@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Learning Act 5</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th, td {
+      border: 2px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    
+    fieldset {
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    
+    legend {
+      font-weight: bold;
+      padding: 0 10px;
+    }
+    
+    textarea {
+      width: 100%;
+    }
+    
+    input[type="submit"],
+    input[type="reset"] {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <form action="/action_page.php">
+    <fieldset>
+      <legend>Customer Information</legend>
+      <table>
+        <tr>
+          <td><label for="name">Name:</label></td>
+          <td><input type="text" name="name" id="name" required></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email:</label></td>
+          <td><input type="email" name="email" id="email" required></td>
+        </tr>
+        <tr>
+          <td><label for="address">Address:</label></td>
+          <td><textarea name="address" id="address" rows="4" cols="20" required></textarea></td>
+        </tr>
+        <tr>
+          <td><label for="postcode">Postcode:</label></td>
+          <td><input type="text" name="postcode" id="postcode" required></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <fieldset>
+      <legend>Order Details</legend>
+      <table>
+        <tr>
+          <th>Product</th>
+          <th>Part Number</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Subtotal</th>
+        </tr>
+        <tr>
+          <td>Econo Box</td>
+          <td>LB100</td>
+          <td><input type="number" name="quantity_lb100" id="quantity_lb100" min="0" value="0"></td>
+          <td>R5</td>
+          <td><input type="text" name="subtotal_lb100" id="subtotal_lb100" readonly></td>
+        </tr>
+        <tr>
+          <td>Standard Box</td>
+          <td>LB200</td>
+          <td><input type="number" name="quantity_lb200" id="quantity_lb200" min="0" value="0"></td>
+          <td>R10</td>
+          <td><input type="text" name="subtotal_lb200" id="subtotal_lb200" readonly></td>
+        </tr>
+        <tr>
+          <td>Premium Box</td>
+          <td>LB300</td>
+          <td><input type="number" name="quantity_lb300" id="quantity_lb300" min="0" value="0"></td>
+          <td>R15</td>
+          <td><input type="text" name="subtotal_lb300" id="subtotal_lb300" readonly></td>
+        </tr>
+        <tr>
+          <td>Deluxe Box</td>
+          <td>LB400</td>
+          <td><input type="number" name="quantity_lb400" id="quantity_lb400" min="0" value="0"></td>
+          <td>R20</td>
+          <td><input type="text" name="subtotal_lb400" id="subtotal_lb400" readonly></td>
+        </tr>
+        <tr>
+          <td>Super Deluxe Box</td>
+          <td>LB500</td>
+          <td><input type="number" name="quantity_lb500" id="quantity_lb500" min="0" value="0"></td>
+          <td>R30</td>
+          <td><input type="text" name="subtotal_lb500" id="subtotal_lb500" readonly></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: right"><strong>Total:</strong></td>
+          <td><input type="text" name="total" id="total" readonly></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <fieldset>
+      <legend>Credit Card Details</legend>
+      <table>
+        <tr>
+          <td><label for="cardType">Card Type:</label></td>
+          <td>
+            <input type="radio" id="mastercard" name="cardType" value="mastercard">
+            <label for="mastercard">Mastercard</label>
+          </td>
+          <td>
+            <input type="radio" id="visa" name="cardType" value="visa">
+            <label for="visa">Visa</label>
+          </td>
+          <td>
+            <input type="radio" id="americanExpress" name="cardType" value="americanExpress">
+            <label for="americanExpress">American Express</label>
+          </td>
+          <td>
+            <input type="radio" id="dinersClub" name="cardType" value="dinersClub">
+            <label for="dinersClub">Diners Club</label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="cardNumber">Card Number:</label></td>
+          <td colspan="4"><input type="text" name="cardNumber" id="cardNumber" required></td>
+        </tr>
+        <tr>
+          <td><label for="expiryDate">Expiry Date:</label></td>
+          <td colspan="4"><input type="text" name="expiryDate" id="expiryDate" required></td>
+        </tr>
+        <tr>
+          <td><label for="deliveryAddress">Delivery Address:</label></td>
+          <td colspan="4"><textarea name="deliveryAddress" id="deliveryAddress" rows="4" cols="20" required></textarea></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <input type="submit" value="Send Order">
+    <input type="reset" value="Clear Form">
+  </form>
+
+  <script>
+    // Calculate subtotals and total
+    function calculateTotals() {
+      const quantities = document.querySelectorAll('input[name^="quantity_"]');
+      const subtotals = document.querySelectorAll('input[name^="subtotal_"]');
+      let total = 0;
+
+      quantities.forEach((quantity, index) => {
+        const quantityValue = parseInt(quantity.value);
+        const unitPrice = parseInt(quantity.parentNode.nextElementSibling.textContent.substr(1));
+        const subtotal = quantityValue * unitPrice;
+        subtotals[index].value = isNaN(subtotal) ? '' : subtotal.toFixed(2);
+        total += isNaN(subtotal) ? 0 : subtotal;
+      });
+
+      document.getElementById('total').value = total.toFixed(2);
+    }
+
+    // Attach event listeners for quantity inputs
+    const quantities = document.querySelectorAll('input[name^="quantity_"]');
+    quantities.forEach(quantity => {
+      quantity.addEventListener('input', calculateTotals);
+    });
+
+    // Initial calculation on page load
+    calculateTotals();
+  </script>
+</body>
+</html>
