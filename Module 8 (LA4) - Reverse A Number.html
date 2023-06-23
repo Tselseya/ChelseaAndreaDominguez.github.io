@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reverse a Number</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reverse a Number</h1>
+
+  <script>
+    function reverseNumber() {
+      var number = +prompt("Enter a number");
+      var reversedNumber = flipInt(number);
+      alert("Reversed number: " + reversedNumber);
+    }
+
+    function flipInt(n) {
+      var digit, result = 0;
+
+      while (n) {
+        digit = n % 10;
+        result = (result * 10) + digit;
+        n = Math.floor(n / 10);
+      }
+
+      return result;
+    }
+  </script>
+
+  <button onclick="reverseNumber()">Reverse a Number</button>
+  <button onclick="history.back()">Go Back</button>
+</body>
+</html>
